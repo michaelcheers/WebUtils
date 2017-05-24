@@ -1,0 +1,55 @@
+﻿
+<html>
+<head>
+<style>
+#textBox
+{
+   width: 500px;
+   height: 400px;
+}
+</style>
+</head>
+<body>
+<div id=p0>
+<li><a href="javascript:go(0)">Text Editor</a></li>
+</div>
+<div id=p1>
+<div id="textBox">some text</div>
+<a href="javascript:saveText()">Save</a>
+</div>
+<script src="Ace/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="Ace/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
+<script src="Ace/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+<script>
+var editor;
+changePage(0);
+function go (pageN)
+{
+   switch (pageN)
+   {
+       case 0:
+           changePage(1);
+           editor = ace.edit("textBox");
+           editor.setTheme("ace/theme/twilight");
+              var JavaScriptMode = ace.require("ace/mode/javascript").Mode;
+    editor.session.setMode(new JavaScriptMode());
+           break;
+   }
+}
+function saveText ()
+{
+    var download = document.createElement('a');
+    download.href = 'data:text/plain;base64,' + btoa(editor.getValue());
+    download.download = "download.txt";
+    download.click();
+}
+function changePage (n)
+{
+    for (var index=0;index<2;index++)
+    {
+        document.getElementById("p" + index).style.display = n === index ? "initial" : "none";
+    }
+}
+</script>
+</body>
+</html>
