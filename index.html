@@ -16,6 +16,7 @@
     </ul>
 </div>
 <div id=p1>
+<input type="file" id="upload" onchange="uploadFile(0)" /><br />
 Line Terminator: <input id="lineTerminator" value="\r\n" /><br />
 Code Type: <select id="languageSelect" onchange="editorChange()"></select>
 <div id="textBox">some text</div>
@@ -28,7 +29,22 @@ Code Type: <select id="languageSelect" onchange="editorChange()"></select>
 var languages = atob('bW9kZS1hYmFwLmpzDQptb2RlLWFiYy5qcw0KbW9kZS1hY3Rpb25zY3JpcHQuanMNCm1vZGUtYWRhLmpzDQptb2RlLWFwYWNoZV9jb25mLmpzDQptb2RlLWFwcGxlc2NyaXB0LmpzDQptb2RlLWFzY2lpZG9jLmpzDQptb2RlLWFzc2VtYmx5X3g4Ni5qcw0KbW9kZS1hdXRvaG90a2V5LmpzDQptb2RlLWJhdGNoZmlsZS5qcw0KbW9kZS1icm8uanMNCm1vZGUtYzlzZWFyY2guanMNCm1vZGUtY2lycnUuanMNCm1vZGUtY2xvanVyZS5qcw0KbW9kZS1jb2JvbC5qcw0KbW9kZS1jb2ZmZWUuanMNCm1vZGUtY29sZGZ1c2lvbi5qcw0KbW9kZS1jc2hhcnAuanMNCm1vZGUtY3NzLmpzDQptb2RlLWN1cmx5LmpzDQptb2RlLWNfY3BwLmpzDQptb2RlLWQuanMNCm1vZGUtZGFydC5qcw0KbW9kZS1kaWZmLmpzDQptb2RlLWRqYW5nby5qcw0KbW9kZS1kb2NrZXJmaWxlLmpzDQptb2RlLWRvdC5qcw0KbW9kZS1kcm9vbHMuanMNCm1vZGUtZWlmZmVsLmpzDQptb2RlLWVqcy5qcw0KbW9kZS1lbGl4aXIuanMNCm1vZGUtZWxtLmpzDQptb2RlLWVybGFuZy5qcw0KbW9kZS1mb3J0aC5qcw0KbW9kZS1mb3J0cmFuLmpzDQptb2RlLWZ0bC5qcw0KbW9kZS1nY29kZS5qcw0KbW9kZS1naGVya2luLmpzDQptb2RlLWdpdGlnbm9yZS5qcw0KbW9kZS1nbHNsLmpzDQptb2RlLWdvYnN0b25lcy5qcw0KbW9kZS1nb2xhbmcuanMNCm1vZGUtZ3Jvb3Z5LmpzDQptb2RlLWhhbWwuanMNCm1vZGUtaGFuZGxlYmFycy5qcw0KbW9kZS1oYXNrZWxsLmpzDQptb2RlLWhhc2tlbGxfY2FiYWwuanMNCm1vZGUtaGF4ZS5qcw0KbW9kZS1oanNvbi5qcw0KbW9kZS1odG1sLmpzDQptb2RlLWh0bWxfZWxpeGlyLmpzDQptb2RlLWh0bWxfcnVieS5qcw0KbW9kZS1pbmkuanMNCm1vZGUtaW8uanMNCm1vZGUtamFjay5qcw0KbW9kZS1qYWRlLmpzDQptb2RlLWphdmEuanMNCm1vZGUtamF2YXNjcmlwdC5qcw0KbW9kZS1qc29uLmpzDQptb2RlLWpzb25pcS5qcw0KbW9kZS1qc3AuanMNCm1vZGUtanN4LmpzDQptb2RlLWp1bGlhLmpzDQptb2RlLWtvdGxpbi5qcw0KbW9kZS1sYXRleC5qcw0KbW9kZS1sZWFuLmpzDQptb2RlLWxlc3MuanMNCm1vZGUtbGlxdWlkLmpzDQptb2RlLWxpc3AuanMNCm1vZGUtbGl2ZXNjcmlwdC5qcw0KbW9kZS1saXZlX3NjcmlwdC5qcw0KbW9kZS1sb2dpcWwuanMNCm1vZGUtbHNsLmpzDQptb2RlLWx1YS5qcw0KbW9kZS1sdWFwYWdlLmpzDQptb2RlLWx1Y2VuZS5qcw0KbW9kZS1tYWtlZmlsZS5qcw0KbW9kZS1tYXJrZG93bi5qcw0KbW9kZS1tYXNrLmpzDQptb2RlLW1hdGxhYi5qcw0KbW9kZS1tYXplLmpzDQptb2RlLW1lbC5qcw0KbW9kZS1taXBzYXNzZW1ibGVyLmpzDQptb2RlLW1pcHNfYXNzZW1ibGVyLmpzDQptb2RlLW11c2hjb2RlLmpzDQptb2RlLW15c3FsLmpzDQptb2RlLW5peC5qcw0KbW9kZS1uc2lzLmpzDQptb2RlLW9iamVjdGl2ZWMuanMNCm1vZGUtb2NhbWwuanMNCm1vZGUtcGFzY2FsLmpzDQptb2RlLXBlcmwuanMNCm1vZGUtcGdzcWwuanMNCm1vZGUtcGhwLmpzDQptb2RlLXBsYWluX3RleHQuanMNCm1vZGUtcG93ZXJzaGVsbC5qcw0KbW9kZS1wcmFhdC5qcw0KbW9kZS1wcm9sb2cuanMNCm1vZGUtcHJvcGVydGllcy5qcw0KbW9kZS1wcm90b2J1Zi5qcw0KbW9kZS1weXRob24uanMNCm1vZGUtci5qcw0KbW9kZS1yYXpvci5qcw0KbW9kZS1yZG9jLmpzDQptb2RlLXJodG1sLmpzDQptb2RlLXJzdC5qcw0KbW9kZS1ydWJ5LmpzDQptb2RlLXJ1c3QuanMNCm1vZGUtc2Fzcy5qcw0KbW9kZS1zY2FkLmpzDQptb2RlLXNjYWxhLmpzDQptb2RlLXNjaGVtZS5qcw0KbW9kZS1zY3NzLmpzDQptb2RlLXNoLmpzDQptb2RlLXNqcy5qcw0KbW9kZS1zbWFydHkuanMNCm1vZGUtc25pcHBldHMuanMNCm1vZGUtc295X3RlbXBsYXRlLmpzDQptb2RlLXNwYWNlLmpzDQptb2RlLXNxbC5qcw0KbW9kZS1zcWxzZXJ2ZXIuanMNCm1vZGUtc3R5bHVzLmpzDQptb2RlLXN2Zy5qcw0KbW9kZS1zd2lmdC5qcw0KbW9kZS1zd2lnLmpzDQptb2RlLXRjbC5qcw0KbW9kZS10ZXguanMNCm1vZGUtdGV4dC5qcw0KbW9kZS10ZXh0aWxlLmpzDQptb2RlLXRvbWwuanMNCm1vZGUtdHN4LmpzDQptb2RlLXR3aWcuanMNCm1vZGUtdHlwZXNjcmlwdC5qcw0KbW9kZS12YWxhLmpzDQptb2RlLXZic2NyaXB0LmpzDQptb2RlLXZlbG9jaXR5LmpzDQptb2RlLXZlcmlsb2cuanMNCm1vZGUtdmhkbC5qcw0KbW9kZS13b2xsb2suanMNCm1vZGUteG1sLmpzDQptb2RlLXhxdWVyeS5qcw0KbW9kZS15YW1sLmpz').
     split('\n').map(function (v) {
         return v.substr('mode-'.length).split('.')[0];
-    });
+        });
+function uploadFile(n, fileReader)
+{
+    switch (n)
+    {
+        case 0:
+            var file = upload.files[0];
+            var fileReader = new FileReader();
+            fileReader.readAsText(file);
+            fileReader.onload = function () { uploadFile(1, fileReader); };
+            break;
+        case 1:
+            editor.setValue(fileReader.result.replace(/\r/g, ''));
+            break;
+    }
+}
 function editorChange()
 {
     currentExt = require('ace/ext/modelist').modesByName[languageSelect.value].extensions.split('|')[0];
