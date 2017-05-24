@@ -16,7 +16,8 @@
     </ul>
 </div>
 <div id=p1>
-<select id="languageSelect" onchange="editorChange()"></select>
+Line Terminator: <input id="lineTerminator" value="\n" /><br />
+Code Type: <select id="languageSelect" onchange="editorChange()"></select>
 <div id="textBox">some text</div>
 <a href="javascript:saveText()">Save</a>
 </div>
@@ -63,7 +64,7 @@ function go (pageN)
 function saveText ()
 {
     var download = document.createElement('a');
-    download.href = 'data:text/plain;base64,' + btoa(editor.getValue());
+    download.href = 'data:text/plain;base64,' + btoa(editor.getValue().replace(/\n/g, eval('\'' + lineTerminator.value + '\'')));
     download.download = "download.txt";
     download.click();
 }
