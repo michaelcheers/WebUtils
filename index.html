@@ -41,6 +41,7 @@ function uploadFile(n, fileReader)
             fileReader.onload = function () { uploadFile(1, fileReader); };
             break;
         case 1:
+            upload.value = null;
             editor.setValue(fileReader.result.replace(/\r/g, ''));
             break;
     }
