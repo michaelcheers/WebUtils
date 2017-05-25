@@ -32,6 +32,8 @@ function uploadFile(n, fileReader)
     {
         case 0:
             var file = upload.files[0];
+            languageSelect.value = require("ace/ext/modelist").getModeForPath(file.name).mode.subString('Ace/mode-'.length);
+            editorChange();
             var fileReader = new FileReader();
             fileReader.readAsText(file);
             fileReader.onload = function () { uploadFile(1, fileReader); };
