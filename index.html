@@ -20,7 +20,8 @@
 Line Terminator: <input id="lineTerminator" value="\r\n" /><br />
 Code Type: <select id="languageSelect" onchange="editorChange()"></select>
 <div id="textBox">some text</div>
-<a href="javascript:saveText()">Download</a>
+<a href="javascript:saveText(true)">Download</a><br />
+<a href="javascript:saveText(false)">Run/As Raw</a>
 </div>
 <div id="p2">
     <textarea id="message"></textarea>
@@ -108,11 +109,14 @@ function go (pageN)
            break;
    }
 }
-function saveText ()
+function saveText (save)
 {
     var download = document.createElement('a');
-    download.href = 'data:;base64,' + btoa(editor.getValue().replace(/\n/g, eval('\'' + lineTerminator.value + '\'')));
-    download.download = "download." + currentExt;
+    download.href = 'data:' + (save ? '' : (currentExt === 'html' ? 'text/html' : 'text/plain')) + ';base64,' + btoa(editor.getValue().replace(/\n/g, eval('\'' + lineTerminator.value + '\'')));
+    if (save)
+        download.download = "download." + currentExt;
+    else
+        download.target = "_blank";
     download.click();
 }
 function changePage (n)
