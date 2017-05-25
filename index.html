@@ -1,4 +1,3 @@
-﻿
 <html>
 <head>
 <style>
@@ -32,7 +31,11 @@ function uploadFile(n, fileReader)
     {
         case 0:
             var file = upload.files[0];
-            languageSelect.value = require("ace/ext/modelist").getModeForPath(file.name).mode.substr('Ace/mode-'.length);
+            //alert("Uploading file: " + file.name);
+            var mode = require("ace/ext/modelist").getModeForPath(file.name).mode;
+            //alert("Mode is " + mode);
+            languageSelect.value = mode.substr('ace/mode/'.length);
+            //alert(languageSelect.value);
             editorChange();
             var fileReader = new FileReader();
             fileReader.readAsText(file);
