@@ -6,6 +6,10 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{913F5227-66E3-49AE-AAB4-9DC4F977DDDD}"
 	ProjectSection(SolutionItems) = preProject
 		index.html = index.html
+		load.txt = load.txt
+		main.js = main.js
+		peer.min.js = peer.min.js
+		unzip.html = unzip.html
 	EndProjectSection
 EndProject
 Global
