@@ -47,9 +47,10 @@
                     main(3, files, 0);
                     break;
                 case 3:
+		    (pBar ? pBar.value++ : void 0);
                     if (arg0.length === arg1)
                         break;
-                    loadScript(arg0[arg1], function () { (pBar ? pBar.value++ : void 0); main(3, arg0, arg1 + 1) });
+                    loadScript(arg0[arg1], function () { main(3, arg0, arg1 + 1) });
                     break;
             }
         }
