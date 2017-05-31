@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script>
+        {0}
+    </script>
+</head>
+<body>
+    Loading...<br />
+    <progress id="pBar"></progress>
+    <script>
+        var pBar = document.getElementById('pBar');
+        var content = atob('{1}');
+        var zipFile = new JSZip();
+        main(0);
+        function loadScript(toLoad, callback, n) {{
+                if (n === void 0)
+                    n = 0;
+                zipFile.file(toLoad)
+                    .async("base64")
+                    .then(function (v) {{
+                        var script = document.createElement('script');
+                        script.onload = callback;
+                        script.src = 'data:text/javascript;base64,' + v;
+                        document.head.appendChild(script);
+                    }});
+            }}
+        function main(step, arg0, arg1, arg2)
+        {{
+            switch (step)
+            {{
+                case 0:
+                    zipFile.loadAsync(content).then(function () {{ main(1)}});
+                    break;
+                case 1:
+                    zipFile.file('load.txt').async("string").then(function(content){{main(2, content)}});
+                    break;
+                case 2:
+                    var files = arg0.replace(/\r/g, '').split('\n');
+                    pBar.max = files.length;
+                    main(3, files, 0);
+                    break;
+                case 3:
+		    (pBar ? pBar.value++ : void 0);
+                    if (arg0.length === arg1)
+                        break;
+                    loadScript(arg0[arg1], function () {{ main(3, arg0, arg1 + 1) }});
+                    break;
+            }}
+        }}
+    </script>
+</body>
+</html>

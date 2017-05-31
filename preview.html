@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Web Utils Preview</title>
+    <script>
+        async function go() {
+            var fileReader = new FileReader();
+            var file = fileInput.files[0];
+            fileReader.readAsText(file);
+            await new Promise(resolve => { fileReader.onload = resolve });
+            var text = fileReader.result.split('\n');
+            for (var fileName of text)
+            {
+                var script = document.createElement('script');
+                script.src = fileName;
+                document.head.appendChild(script);
+                await new Promise(resolve => { script.onload = resolve });
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="file" id="fileInput" onchange="go()" />
+</body>
+</html>
